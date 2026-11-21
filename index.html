@@ -15,20 +15,23 @@
         <li><a href="#burrows">Six burrows</a></li>
         <li><a href="#adaptive">Adaptive</a></li>
         <li><a href="#safety">Safety</a></li>
-        <li><a href="#order" class="cta">Order now</a></li>
+        <li><a href="#specs">Specs</a></li>
       </ul>
+      <div class="nav-actions">
+        <button class="nav-cart" aria-label="Cart" id="nav-cart">
+          <span class="cart-icon">&#x1F6D2;</span>
+          <span class="cart-count" id="cart-count">0</span>
+        </button>
+      </div>
     </nav>
     <div class="hero-content">
       <span class="badge">Now available for pre-order</span>
       <h1>A 3-hour hunt, not a 5-minute puzzle.</h1>
       <p class="subtitle">The adaptive dog foraging tower that keeps your dog busy for 2&ndash;4 hours while you're away.</p>
-      <div class="hero-actions">
-        <a href="#order" class="btn btn-primary">Pre-order Huntly</a>
-        <a href="#how-it-works" class="btn btn-outline">See how it works</a>
-      </div>
+      <a href="#product" class="btn btn-primary">View Huntly Tower</a>
     </div>
     <div class="hero-visual">
-      <div class="tower"></div>
+      <img src="/images/hero.jpg" alt="Huntly foraging tower on a countertop" class="hero-img">
     </div>
   </header>
 
@@ -158,42 +161,70 @@
     </div>
   </section>
 
-  <section id="specs" class="section specs">
+  <section id="product" class="section product">
     <div class="container">
-      <h2>What's inside</h2>
-      <div class="specs-grid">
-        <div class="spec-card">ESP32 controller</div>
-        <div class="spec-card">Auger dispenser &amp; rotating chute</div>
-        <div class="spec-card">Servo latches &amp; small motors</div>
-        <div class="spec-card">IR sensors in every burrow</div>
-        <div class="spec-card">Rechargeable USB-C battery</div>
-        <div class="spec-card">3-button panel &mdash; no app required</div>
-        <div class="spec-card">Optional app for hunt log &amp; ration settings</div>
-        <div class="spec-card">Countertop-height tower with sealed hopper</div>
+      <div class="product-inner">
+        <div class="product-gallery">
+          <img src="/images/lifestyle.jpg" alt="Huntly tower in a home setting" class="product-img main-img">
+        </div>
+        <div class="product-details">
+          <h2>Huntly Tower</h2>
+          <p class="product-desc">Countertop-height adaptive foraging tower with sealed kibble hopper, six burrows, and a rechargeable USB-C battery.</p>
+          <div class="price-block">
+            <span class="price">&#8377;13,999</span>
+            <span class="price-note">Inclusive of all taxes</span>
+          </div>
+          <div class="color-options">
+            <label class="color-label">Colour</label>
+            <div class="swatches" role="radiogroup" aria-labelledby="color-label">
+              <button type="button" class="swatch" data-color="sage" aria-pressed="true" aria-label="Sage" id="swatch-sage"></button>
+              <button type="button" class="swatch" data-color="sand" aria-pressed="false" aria-label="Sand" id="swatch-sand"></button>
+              <button type="button" class="swatch" data-color="charcoal" aria-pressed="false" aria-label="Charcoal" id="swatch-charcoal"></button>
+            </div>
+          </div>
+          <div class="addon-options">
+            <label class="addon-label">
+              <input type="checkbox" id="lid-pack">
+              Optional lid pack &mdash; &#8377;1,799
+            </label>
+          </div>
+          <div class="qty-selector">
+            <label for="product-qty">Quantity</label>
+            <input type="number" id="product-qty" min="1" max="10" value="1">
+          </div>
+          <div class="total-block">
+            <span class="total-label">Total</span>
+            <span class="total-price" id="product-total">&#8377;13,999</span>
+          </div>
+          <button class="btn btn-primary btn-block add-to-cart" id="add-to-cart" aria-label="Add Huntly Tower to cart">
+            Add to cart
+          </button>
+          <p class="product-note">No app required. 3-button panel included. App optional for hunt log and ration settings.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <section id="order" class="section order">
-    <div class="container order-card">
-      <h2>Pre-order Huntly</h2>
-      <p>Join the waitlist for the first batch. Shipping starts soon.</p>
-      <form id="order-form">
-        <div class="form-row">
-          <input type="text" name="name" placeholder="Your name" required>
-          <input type="email" name="email" placeholder="Email address" required>
-        </div>
-        <div class="form-row">
-          <select name="dog-size" required>
-            <option value="">Your dog's size</option>
-            <option>Small</option>
-            <option>Medium</option>
-            <option>Large</option>
-          </select>
-          <button type="submit" class="btn btn-primary btn-block">Join waitlist</button>
-        </div>
-      </form>
-      <p class="form-note">No app required. 3-button panel included. App optional for hunt log and ration settings.</p>
+  <section id="specs" class="section specs">
+    <div class="container">
+      <h2>What's inside</h2>
+      <table class="specs-table">
+        <thead>
+          <tr><th>Component</th><th>Details</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Controller</td><td>ESP32</td></tr>
+          <tr><td>Dispensing</td><td>Auger dispenser &amp; rotating chute</td></tr>
+          <tr><td>Latches</td><td>Servo latches &amp; small motors</td></tr>
+          <tr><td>Sensors</td><td>IR sensor in every burrow</td></tr>
+          <tr><td>Battery</td><td>Rechargeable USB-C battery</td></tr>
+          <tr><td>Controls</td><td>3-button panel &mdash; no app required</td></tr>
+          <tr><td>App</td><td>Optional app for hunt log &amp; ration settings</td></tr>
+          <tr><td>Housing</td><td>Countertop-height tower with sealed hopper</td></tr>
+          <tr><td>Materials</td><td>Food-grade ABS &amp; silicone, chew-resistant</td></tr>
+          <tr><td>Lids</td><td>Dishwasher-safe, no small detachable parts</td></tr>
+        </tbody>
+      </table>
     </div>
   </section>
 
@@ -208,6 +239,27 @@
       </div>
     </div>
   </footer>
+
+  <!-- Cart Drawer -->
+  <div class="cart-overlay" id="cart-overlay"></div>
+  <div class="cart-drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-label="Shopping cart">
+    <button class="cart-close" id="cart-close" aria-label="Close cart">&times;</button>
+    <div class="cart-header">
+      <h3>Your cart</h3>
+      <span class="cart-item-count" id="drawer-item-count">0 items</span>
+    </div>
+    <div class="cart-items" id="cart-items">
+      <!-- empty state injected by JS -->
+    </div>
+    <div class="cart-footer">
+      <div class="cart-totals">
+        <div class="total-row"><span>Subtotal</span><span id="cart-subtotal">&#8377;0</span></div>
+        <div class="total-row"><span>Shipping</span><span id="cart-shipping">&#8377;149</span></div>
+        <div class="total-row total-row-final"><span>Total</span><span id="cart-total">&#8377;149</span></div>
+      </div>
+      <button class="btn btn-primary btn-block" id="checkout-btn" disabled>Checkout</button>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
