@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order lookup — Huntly</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero checkout-header">
+    <nav class="nav">
+      <a href="index.html" class="logo">Huntly</a>
+    </nav>
+  </header>
+
+  <section class="section orders-lookup">
+    <div class="container">
+      <div class="lookup-card">
+        <h2>Look up your order</h2>
+        <p>Enter your order number and email to find your order.</p>
+
+        <form id="lookup-form" novalidate>
+          <div class="form-group">
+            <label for="lookup-order">Order number <span class="required">*</span></label>
+            <input type="text" id="lookup-order" name="lookup-order" required placeholder="e.g. HNT123456">
+            <span class="field-error" id="error-lookup-order"></span>
+          </div>
+          <div class="form-group">
+            <label for="lookup-email">Email address <span class="required">*</span></label>
+            <input type="email" id="lookup-email" name="lookup-email" required>
+            <span class="field-error" id="error-lookup-email"></span>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Find order</button>
+        </form>
+
+        <div class="order-result" id="lookup-result">
+          <h3 id="result-title"></h3>
+          <p id="result-number"></p>
+          <p id="result-name"></p>
+          <p id="result-total"></p>
+          <p id="result-address"></p>
+          <p id="result-delivery"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="orders.js"></script>
+</body>
+</html>

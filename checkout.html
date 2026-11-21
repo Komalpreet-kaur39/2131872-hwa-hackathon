@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout — Huntly</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero checkout-header">
+    <nav class="nav">
+      <a href="index.html" class="logo">Huntly</a>
+    </nav>
+  </header>
+
+  <section class="section checkout">
+    <div class="container">
+      <div class="checkout-inner">
+        <div class="checkout-form">
+          <h2>Checkout</h2>
+          <p class="demo-badge">Demo mode — no real payments are processed.</p>
+          <form id="checkout-form" novalidate>
+            <div class="form-group">
+              <label for="contact-name">Full name <span class="required">*</span></label>
+              <input type="text" id="contact-name" name="contact-name" required>
+              <span class="field-error" id="error-contact-name"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="contact-email">Email address <span class="required">*</span></label>
+              <input type="email" id="contact-email" name="contact-email" required>
+              <span class="field-error" id="error-contact-email"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="contact-phone">Phone number <span class="required">*</span></label>
+              <input type="tel" id="contact-phone" name="contact-phone" inputmode="tel" maxlength="10" required>
+              <span class="field-error" id="error-contact-phone"></span>
+              <span class="field-hint">10 digits</span>
+            </div>
+
+            <hr class="section-divider">
+
+            <h3 class="address-title">Shipping address</h3>
+
+            <div class="form-group">
+              <label for="ship-address">Address <span class="required">*</span></label>
+              <textarea id="ship-address" name="ship-address" rows="2" required></textarea>
+              <span class="field-error" id="error-ship-address"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="ship-city">City <span class="required">*</span></label>
+              <input type="text" id="ship-city" name="ship-city" required>
+              <span class="field-error" id="error-ship-city"></span>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="ship-state">State <span class="required">*</span></label>
+                <select id="ship-state" name="ship-state" required>
+                  <option value="">Select a state</option>
+                  <option>Andhra Pradesh</option>
+                  <option>Arunachal Pradesh</option>
+                  <option>Assam</option>
+                  <option>Bihar</option>
+                  <option>Chhattisgarh</option>
+                  <option>Goa</option>
+                  <option>Gujarat</option>
+                  <option>Haryana</option>
+                  <option>Himachal Pradesh</option>
+                  <option>Jharkhand</option>
+                  <option>Karnataka</option>
+                  <option>Kerala</option>
+                  <option>Madhya Pradesh</option>
+                  <option>Maharashtra</option>
+                  <option>Manipur</option>
+                  <option>Meghalaya</option>
+                  <option>Mizoram</option>
+                  <option>Nagaland</option>
+                  <option>Odisha</option>
+                  <option>Punjab</option>
+                  <option>Rajasthan</option>
+                  <option>Sikkim</option>
+                  <option>Tamil Nadu</option>
+                  <option>Telangana</option>
+                  <option>Tripura</option>
+                  <option>Uttar Pradesh</option>
+                  <option>Uttarakhand</option>
+                  <option>West Bengal</option>
+                  <option>Delhi</option>
+                  <option>Puducherry</option>
+                  <option>Chandigarh</option>
+                  <option>Jammu &amp; Kashmir</option>
+                  <option>Ladakh</option>
+                  <option>Lakshadweep</option>
+                  <option>Andaman &amp; Nicobar</option>
+                  <option>Dadra &amp; Nagar Haveli</option>
+                  <option>Daman &amp; Diu</option>
+                </select>
+                <span class="field-error" id="error-ship-state"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="ship-pincode">Pincode <span class="required">*</span></label>
+                <input type="text" id="ship-pincode" name="ship-pincode" inputmode="numeric" maxlength="6" required>
+                <span class="field-error" id="error-ship-pincode"></span>
+                <span class="field-hint">6 digits</span>
+              </div>
+            </div>
+
+            <hr class="section-divider">
+
+            <h3 class="address-title">Order summary</h3>
+            <div class="order-summary" id="checkout-summary">
+              <!-- populated by JS -->
+            </div>
+
+            <hr class="section-divider">
+
+            <h3 class="address-title">Payment</h3>
+            <div class="demo-notice">
+              <strong>Demo payment.</strong> This is a mock checkout for the hackathon. No card details are stored or charged.
+            </div>
+            <div class="form-group">
+              <label for="pay-cardname">Name on card <span class="required">*</span></label>
+              <input type="text" id="pay-cardname" name="pay-cardname" required>
+              <span class="field-error" id="error-pay-cardname"></span>
+            </div>
+            <div class="form-group">
+              <label for="pay-cardnumber">Card number <span class="required">*</span></label>
+              <input type="text" id="pay-cardnumber" name="pay-cardnumber" inputmode="numeric" maxlength="16" required>
+              <span class="field-error" id="error-pay-cardnumber"></span>
+              <span class="field-hint">Demo: any 16 digits</span>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="pay-expiry">Expiry (MM/YY) <span class="required">*</span></label>
+                <input type="text" id="pay-expiry" name="pay-expiry" placeholder="MM/YY" required>
+                <span class="field-error" id="error-pay-expiry"></span>
+              </div>
+              <div class="form-group">
+                <label for="pay-cvv">CVV <span class="required">*</span></label>
+                <input type="text" id="pay-cvv" name="pay-cvv" inputmode="numeric" maxlength="3" required>
+                <span class="field-error" id="error-pay-cvv"></span>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block" id="place-order">Place order</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="checkout.js"></script>
+</body>
+</html>

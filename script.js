@@ -16,6 +16,11 @@ document.addEventListener('DOMContentLoaded', function() {
   const cartShippingEl = document.getElementById('cart-shipping');
   const cartTotalEl = document.getElementById('cart-total');
   const checkoutBtn = document.getElementById('checkout-btn');
+  if (checkoutBtn) {
+    checkoutBtn.addEventListener('click', function() {
+      window.location.href = 'checkout.html';
+    });
+  }
   const drawerItemCountEl = document.getElementById('drawer-item-count');
 
   // Product page elements (may not exist on all pages)

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order confirmation — Huntly</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero checkout-header">
+    <nav class="nav">
+      <a href="index.html" class="logo">Huntly</a>
+    </nav>
+  </header>
+
+  <section class="section confirmation">
+    <div class="container">
+      <div class="confirmation-card">
+        <h2>Order confirmed</h2>
+        <p class="demo-badge">Demo mode — this is a mock order for the hackathon.</p>
+        <div class="confirmation-order">Order #<span id="order-number"></span></p>
+        <p>Thank you for your order, <span id="order-name"></span>!</p>
+
+        <table class="summary-table">
+          <thead>
+            <tr><th>Item</th><th>Qty</th><th>Total</th></tr>
+          </thead>
+          <tbody id="confirm-items"></tbody>
+          <tfoot>
+            <tr><td>Subtotal</td><td></td><td id="confirm-subtotal"></td></tr>
+            <tr><td>Shipping</td><td></td><td id="confirm-shipping"></td></tr>
+            <tr><td><strong>Total</strong></td><td></td><td id="confirm-total"></td></tr>
+          </tfoot>
+        </table>
+
+        <h3 class="address-title">Shipping to</h3>
+        <p id="confirm-address"></p>
+        <p id="confirm-city"></p>
+
+        <p id="confirm-delivery"></p>
+
+        <div class="confirmation-actions">
+          <a href="index.html" class="btn btn-outline">Continue shopping</a>
+          <a href="orders.html" class="btn btn-primary">Track another order</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="confirmation.js"></script>
+</body>
+</html>
