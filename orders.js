@@ -13,22 +13,22 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  function shippingField(order, keys) {
-    const shipping = order && order.shipping;
-    if (!shipping) return undefined;
-    for (var i = 0; i < keys.length; i++) {
-      var v = shipping[keys[i]];
-      if (v !== undefined && v !== null && String(v).trim() !== '') return v;
-    }
-    return undefined;
+  function getField(obj, key) {
+    if (!obj) return null;
+    var v = obj[key];
+    return v !== undefined && v !== null && String(v).trim() !== '' ? String(v) : null;
   }
 
-  function formatShippingAddress(order) {
-    var a = shippingField(order, ['address', 'shipping_address', 'street', 'address1']);
-    var c = shippingField(order, ['city', 'shipping_city', 'town']);
-    var s = shippingField(order, ['state', 'shipping_state', 'region']);
-    var p = shippingField(order, ['pincode', 'shipping_pincode', 'zip', 'postal_code']);
-    var parts = [a, c, s, p].filter(Boolean);
+  function formatAddressLine(order) {
+    var contact = order && order.contact;
+    var shipping = order && order.shipping;
+    var name = getField(contact, 'name');
+    var address = getField(shipping, 'address');
+    var city = getField(shipping, 'city');
+    var state = getField(shipping, 'state');
+    var pincode = getField(shipping, 'pincode');
+    var statePin = [state, pincode].filter(Boolean).join(' ');
+    var parts = [name, address, city, statePin].filter(Boolean);
     return parts.length ? parts.join(', ') : '—';
   }
 
@@ -47,7 +47,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const email = document.getElementById('lookup-email').value.trim().toLowerCase();
 
     const orders = loadOrders();
-    const order = orders.find(o => o.id.toLowerCase() === orderNum.toLowerCase() && o.contact.email.toLowerCase() === email);
+    const order = orders.find(function(o) {
+      var contact = o && o.contact;
+      return o && o.id &&
+        String(o.id).toLowerCase() === orderNum.toLowerCase() &&
+        contact && getField(contact, 'email') &&
+        String(getField(contact, 'email')).toLowerCase() === email;
+    });
 
     if (!order) {
       resultEl.className = 'order-result notfound';
@@ -64,10 +70,11 @@ document.addEventListener('DOMContentLoaded', function() {
     resultEl.className = 'order-result found';
     resultEl.style.display = 'block';
     resultTitle.textContent = 'Order found';
-    resultNumber.textContent = 'Order #' + order.id;
-    resultName.textContent = 'Customer: ' + order.contact.name;
-    resultTotal.textContent = 'Total: ' + formatINR(order.total);
-    resultAddress.textContent = formatShippingAddress(order);
+    resultNumber.textContent = 'Order #' + (getField(order, 'id') || '—');
+    resultName.textContent = 'Customer: ' + (getField(order.contact, 'name') || '—');
+    var total = getField(order, 'total');
+    resultTotal.textContent = 'Total: ' + (total ? formatINR(parseInt(total)) : '—');
+    resultAddress.textContent = formatAddressLine(order);
 
     const orderDate = new Date(order.date);
     const delivery = new Date(orderDate.getTime() + 6 * 24 * 60 * 60 * 1000);

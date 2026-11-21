@@ -28,22 +28,22 @@ document.addEventListener('DOMContentLoaded', function() {
   const confirmCityEl = document.getElementById('confirm-city');
   const confirmDeliveryEl = document.getElementById('confirm-delivery');
 
-  function shippingField(order, keys) {
-    const shipping = order && order.shipping;
-    if (!shipping) return undefined;
-    for (var i = 0; i < keys.length; i++) {
-      var v = shipping[keys[i]];
-      if (v !== undefined && v !== null && String(v).trim() !== '') return v;
-    }
-    return undefined;
+  function getField(obj, key) {
+    if (!obj) return null;
+    var v = obj[key];
+    return v !== undefined && v !== null && String(v).trim() !== '' ? String(v) : null;
   }
 
-  function formatShippingAddress(order) {
-    var a = shippingField(order, ['address', 'shipping_address', 'street', 'address1']);
-    var c = shippingField(order, ['city', 'shipping_city', 'town']);
-    var s = shippingField(order, ['state', 'shipping_state', 'region']);
-    var p = shippingField(order, ['pincode', 'shipping_pincode', 'zip', 'postal_code']);
-    var parts = [a, c, s, p].filter(Boolean);
+  function formatAddressLine(order) {
+    var contact = order && order.contact;
+    var shipping = order && order.shipping;
+    var name = getField(contact, 'name');
+    var address = getField(shipping, 'address');
+    var city = getField(shipping, 'city');
+    var state = getField(shipping, 'state');
+    var pincode = getField(shipping, 'pincode');
+    var statePin = [state, pincode].filter(Boolean).join(' ');
+    var parts = [name, address, city, statePin].filter(Boolean);
     return parts.length ? parts.join(', ') : '—';
   }
 
@@ -73,25 +73,43 @@ document.addEventListener('DOMContentLoaded', function() {
     return;
   }
 
-  orderNumberEl.textContent = order.id;
-  orderNameEl.textContent = order.contact.name;
+  orderNumberEl.textContent = getField(order, 'id') || '—';
+  orderNameEl.textContent = getField(order.contact, 'name') || '—';
 
   let itemsHtml = '';
-  order.items.forEach(item => {
+  var items = order && order.items ? order.items : [];
+  items.forEach(function(item) {
+    var color = getField(item, 'color') || '—';
+    var lid = getField(item, 'lidPack') ? ' + Lid pack' : '';
+    var qty = getField(item, 'qty') || '—';
+    var unit = getField(item, 'unit');
+    var itemTotal = unit ? formatINR(parseInt(unit) * parseInt(qty)) : '—';
     itemsHtml += '<tr>' +
-      '<td>' + escapeHtml(item.color) + (item.lidPack ? ' + Lid pack' : '') + '</td>' +
-      '<td>' + item.qty + '</td>' +
-      '<td>' + formatINR(item.unit * item.qty) + '</td>' +
+      '<td>' + escapeHtml(color) + lid + '</td>' +
+      '<td>' + escapeHtml(qty) + '</td>' +
+      '<td>' + escapeHtml(itemTotal) + '</td>' +
       '</tr>';
   });
   confirmItemsEl.innerHTML = itemsHtml;
 
-  confirmSubtotalEl.textContent = formatINR(order.subtotal);
-  confirmShippingEl.textContent = order.shipping === 0 ? 'Free' : formatINR(order.shipping);
-  confirmTotalEl.textContent = formatINR(order.total);
+  var subtotal = getField(order, 'subtotal');
+  var shipping = getField(order, 'shipping');
+  var total = getField(order, 'total');
+  confirmSubtotalEl.textContent = subtotal ? formatINR(parseInt(subtotal)) : '—';
+  confirmShippingEl.textContent = shipping !== null && shipping !== undefined ? (parseInt(shipping) === 0 ? 'Free' : formatINR(parseInt(shipping))) : '—';
+  confirmTotalEl.textContent = total ? formatINR(parseInt(total)) : '—';
 
-  confirmAddressEl.textContent = formatShippingAddress(order);
-  confirmCityEl.textContent = shippingField(order, ['city', 'shipping_city', 'town']) || '—';
+  confirmAddressEl.textContent = formatAddressLine(order);
+  confirmCityEl.textContent = '';
+
+  var email = getField(order.contact, 'email');
+  var phone = getField(order.contact, 'phone');
+  var contactParts = [email, phone].filter(Boolean);
+  if (contactParts.length) {
+    var contactEl = document.createElement('p');
+    contactEl.textContent = contactParts.join(', ');
+    confirmAddressEl.parentNode.insertBefore(contactEl, confirmCityEl);
+  }
 
   // Estimated delivery: 5-7 days from order date
   const orderDate = new Date(order.date);
