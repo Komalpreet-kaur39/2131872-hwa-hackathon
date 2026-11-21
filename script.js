@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function formatINR(n) {
-    return '&#8377;' + n.toLocaleString('en-IN');
+    return '₹' + n.toLocaleString('en-IN');
   }
 
   // ---------- UI ----------
@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
         '<div class="cart-item-controls">' +
         '<button type="button" class="qty-decr" data-key="' + escapeAttr(item.key) + '">&#x2212;</button>' +
         '<span class="cart-item-qty">' + item.qty + '</span>' +
-        '<button type="button" class="qty-incr" data-key="' + escapeAttr(item.key) + '">&#x2B9;</button>' +
+        '<button type="button" class="qty-incr" data-key="' + escapeAttr(item.key) + '">+</button>' +
         '</div>' +
         '</div>' +
         '<button type="button" class="remove-item" data-key="' + escapeAttr(item.key) + '">Remove</button>' +
