@@ -254,6 +254,30 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
+  // ---------- FAQ accordion ----------
+  function toggleAccordion(btn) {
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    const panelId = btn.getAttribute('aria-controls');
+    const panel = document.getElementById(panelId);
+    const icon = btn.querySelector('.accordion-icon');
+
+    btn.setAttribute('aria-expanded', String(!expanded));
+    if (panel) panel.hidden = expanded;
+    if (icon) icon.textContent = expanded ? '+' : '−';
+  }
+
+  document.querySelectorAll('.accordion-header').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      toggleAccordion(this);
+    });
+    btn.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleAccordion(this);
+      }
+    });
+  });
+
   // ---------- Init ----------
   updateCartUI();
 });
