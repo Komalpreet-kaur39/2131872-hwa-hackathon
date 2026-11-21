@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.field-error').forEach(el => el.textContent = '');
   }
 
-  // Load cart
-  function loadCart() {
+  // Load cart from localStorage (same key and item fields as script.js)
+  function getCart() {
     try {
       const raw = localStorage.getItem(CART_KEY);
       return raw ? JSON.parse(raw) : [];
@@ -47,8 +47,8 @@ document.addEventListener('DOMContentLoaded', function() {
       return sum + unit * item.qty;
     }, 0);
   }
-  function getShipping(subtotal) {
-    if (cart.length === 0) return 0;
+  function getShipping(subtotal, cart) {
+    if (!cart || cart.length === 0) return 0;
     return subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;
   }
   function formatINR(n) {
@@ -57,10 +57,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Render summary
   function renderSummary() {
-    const cart = loadCart();
+    const cart = getCart();
     if (!summaryEl) return;
     if (cart.length === 0) {
-      summaryEl.innerHTML = '<p>Your cart is empty.</p>';
+      summaryEl.innerHTML = '<p>Your cart is empty.</p><p><a href="index.html" class="btn">Back to shop</a></p>';
       return;
     }
     let html = '<table class="summary-table"><thead><tr><th>Item</th><th>Qty</th><th>Total</th></tr></thead><tbody>';
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
         '</tr>';
     });
     const subtotal = getSubtotal(cart);
-    const shipping = getShipping(subtotal);
+    const shipping = getShipping(subtotal, cart);
     const total = subtotal + shipping;
     html += '</tbody><tfoot>' +
       '<tr><td>Subtotal</td><td></td><td>' + formatINR(subtotal) + '</td></tr>' +
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Cart not empty
-    const cart = loadCart();
+    const cart = getCart();
     if (cart.length === 0) {
       showError('error-contact-name', 'Your cart is empty. Add items before checkout.');
       valid = false;
@@ -172,9 +172,9 @@ document.addEventListener('DOMContentLoaded', function() {
     e.preventDefault();
     if (!validate()) return;
 
-    const cart = loadCart();
+    const cart = getCart();
     const subtotal = getSubtotal(cart);
-    const shipping = getShipping(subtotal);
+    const shipping = getShipping(subtotal, cart);
     const total = subtotal + shipping;
 
     const placeBtn = document.getElementById('place-order');
