@@ -28,10 +28,21 @@ document.addEventListener('DOMContentLoaded', function() {
   const confirmCityEl = document.getElementById('confirm-city');
   const confirmDeliveryEl = document.getElementById('confirm-delivery');
 
-  if (!id) {
+  function showNotFound() {
     orderNumberEl.textContent = '—';
-    orderNameEl.textContent = 'customer';
-    confirmDeliveryEl.textContent = 'No order found.';
+    orderNameEl.textContent = '—';
+    confirmItemsEl.innerHTML = '<tr><td colspan="3">No order found.</td></tr>';
+    confirmSubtotalEl.textContent = '—';
+    confirmShippingEl.textContent = '—';
+    confirmTotalEl.textContent = '—';
+    confirmAddressEl.textContent = '—';
+    confirmCityEl.textContent = '—';
+    confirmDeliveryEl.innerHTML =
+      'We couldn’t find an order with that number. <a href="index.html">Return to shop</a>';
+  }
+
+  if (!id) {
+    showNotFound();
     return;
   }
 
@@ -39,9 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const order = orders.find(o => o.id === id);
 
   if (!order) {
-    orderNumberEl.textContent = id;
-    orderNameEl.textContent = 'customer';
-    confirmDeliveryEl.textContent = 'Order not found.';
+    showNotFound();
     return;
   }
 

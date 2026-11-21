@@ -177,8 +177,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const shipping = getShipping(subtotal);
     const total = subtotal + shipping;
 
+    const placeBtn = document.getElementById('place-order');
+    placeBtn.disabled = true;
+    placeBtn.textContent = 'Placing order...';
+
+    const orderId = 'HNT-2026-' + Math.floor(1000 + Math.random() * 9000);
+
     const order = {
-      id: 'HNT' + Date.now().toString().slice(-6),
+      id: orderId,
       date: new Date().toISOString(),
       contact: {
         name: document.getElementById('contact-name').value.trim(),
