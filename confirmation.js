@@ -28,6 +28,25 @@ document.addEventListener('DOMContentLoaded', function() {
   const confirmCityEl = document.getElementById('confirm-city');
   const confirmDeliveryEl = document.getElementById('confirm-delivery');
 
+  function shippingField(order, keys) {
+    const shipping = order && order.shipping;
+    if (!shipping) return undefined;
+    for (var i = 0; i < keys.length; i++) {
+      var v = shipping[keys[i]];
+      if (v !== undefined && v !== null && String(v).trim() !== '') return v;
+    }
+    return undefined;
+  }
+
+  function formatShippingAddress(order) {
+    var a = shippingField(order, ['address', 'shipping_address', 'street', 'address1']);
+    var c = shippingField(order, ['city', 'shipping_city', 'town']);
+    var s = shippingField(order, ['state', 'shipping_state', 'region']);
+    var p = shippingField(order, ['pincode', 'shipping_pincode', 'zip', 'postal_code']);
+    var parts = [a, c, s, p].filter(Boolean);
+    return parts.length ? parts.join(', ') : '—';
+  }
+
   function showNotFound() {
     orderNumberEl.textContent = '—';
     orderNameEl.textContent = '—';
@@ -71,8 +90,8 @@ document.addEventListener('DOMContentLoaded', function() {
   confirmShippingEl.textContent = order.shipping === 0 ? 'Free' : formatINR(order.shipping);
   confirmTotalEl.textContent = formatINR(order.total);
 
-  confirmAddressEl.textContent = order.shipping.address + ', ' + order.shipping.city + ', ' + order.shipping.state + ' ' + order.shipping.pincode;
-  confirmCityEl.textContent = order.shipping.city;
+  confirmAddressEl.textContent = formatShippingAddress(order);
+  confirmCityEl.textContent = shippingField(order, ['city', 'shipping_city', 'town']) || '—';
 
   // Estimated delivery: 5-7 days from order date
   const orderDate = new Date(order.date);

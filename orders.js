@@ -13,6 +13,25 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
+  function shippingField(order, keys) {
+    const shipping = order && order.shipping;
+    if (!shipping) return undefined;
+    for (var i = 0; i < keys.length; i++) {
+      var v = shipping[keys[i]];
+      if (v !== undefined && v !== null && String(v).trim() !== '') return v;
+    }
+    return undefined;
+  }
+
+  function formatShippingAddress(order) {
+    var a = shippingField(order, ['address', 'shipping_address', 'street', 'address1']);
+    var c = shippingField(order, ['city', 'shipping_city', 'town']);
+    var s = shippingField(order, ['state', 'shipping_state', 'region']);
+    var p = shippingField(order, ['pincode', 'shipping_pincode', 'zip', 'postal_code']);
+    var parts = [a, c, s, p].filter(Boolean);
+    return parts.length ? parts.join(', ') : '—';
+  }
+
   const form = document.getElementById('lookup-form');
   const resultEl = document.getElementById('lookup-result');
   const resultTitle = document.getElementById('result-title');
@@ -48,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
     resultNumber.textContent = 'Order #' + order.id;
     resultName.textContent = 'Customer: ' + order.contact.name;
     resultTotal.textContent = 'Total: ' + formatINR(order.total);
-    resultAddress.textContent = order.shipping.address + ', ' + order.shipping.city + ', ' + order.shipping.state + ' ' + order.shipping.pincode;
+    resultAddress.textContent = formatShippingAddress(order);
 
     const orderDate = new Date(order.date);
     const delivery = new Date(orderDate.getTime() + 6 * 24 * 60 * 60 * 1000);
